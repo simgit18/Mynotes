@@ -34,12 +34,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
       appBar: AppBar(title: const Text('Registers'), backgroundColor: Colors.blue,
       ),
-      body: FutureBuilder(future: Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform), 
-      builder: (context,snapshot){
-        switch(snapshot.connectionState){
-          
-          case ConnectionState.done:
-            return Padding(
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
@@ -60,25 +55,20 @@ class _RegisterViewState extends State<RegisterView> {
             TextButton(
               onPressed: () async {
 
-                
-
                 final email = _email.text;
                 final password = _password.text;
                 await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
                 print(UserCredential);
               }, 
               child: const Text('Register')),
+              TextButton(onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil('/login/', (route) => false);
+              }, child: const Text("Already registered? Click Here.") )
           ],
         ),
-      );
+      ),
 
-      default:
-      return const Text("Loading....");
-            
-        }
-        
-      }) 
-      , 
+    
     );
  
 
